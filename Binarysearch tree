@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct treeNode
+{
+        int data;
+        struct treeNode *left;
+        struct treeNode *right;
+
+}treeNode;
+
+
+
+treeNode * Insert(treeNode *node,int data)
+{
+        if(node==NULL)
+        {
+                treeNode *temp;
+                temp = (treeNode *)malloc(sizeof(treeNode));
+                temp -> data = data;
+                temp -> left = temp -> right = NULL;
+                return temp;
+        }
+
+        if(data >(node->data))
+        {
+                node->right = Insert(node->right,data);
+        }
+        else if(data < (node->data))
+        {
+                node->left = Insert(node->left,data);
+        }
+        
+        return node;
+
+}
+
+
+
+treeNode * Find(treeNode *node, int data)
+{
+        if(node==NULL)
+        {
+            
+                return NULL;
+        }
+        if(data > node->data)
+        {
+               
+                return Find(node->right,data);
+        }
+        else if(data < node->data)
+        {
+                
+                return Find(node->left,data);
+        }
+        else
+        {
+                
+                return node;
+        }
+}
+
+void PrintInorder(treeNode *node)
+{
+        if(node==NULL)
+        {
+                return;
+        }
+        PrintInorder(node->left);
+        printf("%d ",node->data);
+        PrintInorder(node->right);
+}
+
+int main()
+{
+        treeNode *root = NULL;
+        root = Insert(root, 5);
+        root = Insert(root, 18);
+        root = Insert(root, 3);
+        root = Insert(root, 14);
+        root = Insert(root, 83);
+        root = Insert(root, 1);
+        root = Insert(root, 19);
+        root = Insert(root, 6);
+        PrintInorder(root);
+        printf("\n");
+       
+        treeNode * temp;
+        
+        temp = Find(root,6);
+        if(temp==NULL)
+        {
+                printf("Element 6 not found\n");
+        }
+        else
+        {
+                printf("Element 6 Found\n");
+        }
+        temp = Find(root,2);
+        if(temp==NULL)
+        {
+                printf("Element 2 not found\n");
+        }
+        else
+        {
+                printf("Element 2 Found\n");
+        }
+}
